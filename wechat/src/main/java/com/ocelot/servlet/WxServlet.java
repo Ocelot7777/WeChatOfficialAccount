@@ -29,25 +29,25 @@ public class WxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//微信服务器get传递过来的参数
 		String signature = request.getParameter("signature");
-        String timestamp = request.getParameter("timestamp");
-        String nonce = request.getParameter("nonce");
-        String echostr = request.getParameter("echostr");
-        
-        //一些API和封装的操作类
-        WxMpService wxMpService = new WxMpServiceImpl();
-        //准备注入token参数 WxMpInMemoryConfigStorage为微信配置参数实体类
-        WxMpInMemoryConfigStorage wxConfigProvider = new WxMpInMemoryConfigStorage();
-        wxConfigProvider.setToken("steam");
-        
-        wxMpService.setWxMpConfigStorage(wxConfigProvider);
-        //直接调用checkSignature进行验证
-        boolean flag = wxMpService.checkSignature(timestamp, nonce, signature);
-        
-        PrintWriter out = response.getWriter();
-        if(flag) {
-        	out.print(echostr);
-        }
-        out.close();
+		String timestamp = request.getParameter("timestamp");
+		String nonce = request.getParameter("nonce");
+		String echostr = request.getParameter("echostr");
+
+		//一些API和封装的操作类
+		WxMpService wxMpService = new WxMpServiceImpl();
+		//准备注入token参数 WxMpInMemoryConfigStorage为微信配置参数实体类
+		WxMpInMemoryConfigStorage wxConfigProvider = new WxMpInMemoryConfigStorage();
+		wxConfigProvider.setToken("steam");
+
+		wxMpService.setWxMpConfigStorage(wxConfigProvider);
+		//直接调用checkSignature进行验证
+		boolean flag = wxMpService.checkSignature(timestamp, nonce, signature);
+
+		PrintWriter out = response.getWriter();
+		if(flag) {
+			out.print(echostr);
+		}
+		out.close();
 	}
 
 	@Override
